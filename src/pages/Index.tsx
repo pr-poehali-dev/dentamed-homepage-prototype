@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Sheet,
   SheetContent,
@@ -44,6 +44,8 @@ const Index = () => {
   const reviewsSection = useScrollAnimation();
   const doctorsSection = useScrollAnimation();
 
+  const [heroApi, setHeroApi] = useState<any>(null);
+
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
@@ -52,6 +54,16 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!heroApi) return;
+
+    const interval = setInterval(() => {
+      heroApi.scrollNext();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [heroApi]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,6 +124,67 @@ const Index = () => {
           </Sheet>
         </div>
       </nav>
+
+      <section className="relative h-[600px] overflow-hidden mt-16">
+        <Carousel 
+          className="w-full h-full"
+          setApi={setHeroApi}
+          opts={{ loop: true }}
+        >
+          <CarouselContent className="h-full">
+            {[
+              {
+                img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/d208207a-0d7a-43bf-8455-f4656d5d7d39.jpg",
+                title: "Премиум стоматология в центре Москвы",
+                subtitle: "Технологии мирового уровня и безупречный сервис"
+              },
+              {
+                img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/474a3ee8-80a6-4b40-a833-65ede21c71c5.jpg",
+                title: "Идеальная улыбка — это реальность",
+                subtitle: "Виниры, отбеливание, имплантация на высшем уровне"
+              },
+              {
+                img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/f2ca0127-d3ba-4ccb-833e-cc988b7b5a32.jpg",
+                title: "Забота о вашем комфорте",
+                subtitle: "Индивидуальный подход и атмосфера доверия"
+              }
+            ].map((slide, idx) => (
+              <CarouselItem key={idx} className="h-full">
+                <div className="relative h-full w-full">
+                  <img 
+                    src={slide.img}
+                    alt={slide.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-graphite/80 via-graphite/60 to-transparent"></div>
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="max-w-7xl mx-auto px-6 w-full">
+                      <div className="max-w-2xl text-white">
+                        <h2 className="font-display text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                          {slide.title}
+                        </h2>
+                        <p className="font-serif text-xl md:text-2xl mb-8 text-champagne/90">
+                          {slide.subtitle}
+                        </p>
+                        <Button 
+                          size="lg" 
+                          className="bg-teal-gold hover:bg-teal-gold/90 text-graphite font-bold px-8 py-6 text-lg"
+                          onClick={() => setAppointmentOpen(true)}
+                        >
+                          Записаться на консультацию
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-6" />
+          <CarouselNext className="right-6" />
+        </Carousel>
+      </section>
+
       <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-champagne/30 to-white overflow-hidden pt-20">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600')] bg-cover bg-center opacity-10"></div>
         
