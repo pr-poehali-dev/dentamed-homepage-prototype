@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Index = () => {
   return (
@@ -104,28 +111,31 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Эстетическая реставрация", icon: "Sparkles" },
-              { title: "Имплантация без боли", icon: "Shield" },
-              { title: "Голливудская улыбка", icon: "Star" },
-              { title: "Ортодонтия", icon: "Smile" }
+              { title: "Эстетическая реставрация", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400" },
+              { title: "Имплантация без боли", img: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=400" },
+              { title: "Голливудская улыбка", img: "https://images.unsplash.com/photo-1609840114035-3c981736dfa8?w=400" },
+              { title: "Ортодонтия", img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400" }
             ].map((service, idx) => (
               <Card 
                 key={idx} 
-                className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-none bg-white hover:scale-105"
+                className="group hover:shadow-2xl transition-all duration-300 cursor-pointer border-none bg-white hover:scale-105 overflow-hidden"
               >
-                <CardContent className="p-8 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="w-16 h-16 rounded-full bg-champagne flex items-center justify-center group-hover:bg-teal-gold transition-colors">
-                      <Icon name={service.icon} size={32} className="text-graphite" />
-                    </div>
+                <div className="relative h-64 overflow-hidden">
+                  <img 
+                    src={service.img}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/50 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="font-display text-2xl font-semibold mb-3">
+                      {service.title}
+                    </h3>
+                    <Button variant="secondary" size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                      Подробнее
+                    </Button>
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-graphite mb-4">
-                    {service.title}
-                  </h3>
-                  <Button variant="ghost" className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    Подробнее
-                  </Button>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
@@ -161,7 +171,107 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="font-display text-5xl font-bold text-graphite mb-4 text-center">
+            Фото наших работ
+          </h2>
+          <p className="font-serif text-lg text-muted-foreground mb-12 text-center">
+            Результаты, которыми мы гордимся
+          </p>
+          
+          <Carousel className="w-full max-w-5xl mx-auto">
+            <CarouselContent>
+              {[
+                "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800",
+                "https://images.unsplash.com/photo-1588776814546-daab30f310ce?w=800",
+                "https://images.unsplash.com/photo-1609840112855-9ab5710e7d4f?w=800",
+                "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=800",
+                "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800"
+              ].map((img, idx) => (
+                <CarouselItem key={idx} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-2">
+                    <Card className="border-none overflow-hidden">
+                      <img 
+                        src={img}
+                        alt={`Работа ${idx + 1}`}
+                        className="w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-12" />
+            <CarouselNext className="-right-12" />
+          </Carousel>
+        </div>
+      </section>
+
       <section className="py-20 px-6 bg-gradient-to-b from-champagne/20 to-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-display text-5xl font-bold text-graphite mb-4 text-center">
+            Отзывы пациентов
+          </h2>
+          <p className="font-serif text-lg text-muted-foreground mb-12 text-center">
+            Мнение тех, кто доверил нам свою улыбку
+          </p>
+          
+          <Carousel className="w-full max-w-4xl mx-auto">
+            <CarouselContent>
+              {[
+                {
+                  text: "Благодарю команду Dentamed за внимание и мастерство. Атмосфера доверия и уверенности с первого визита.",
+                  author: "Елена М.",
+                  role: "Предприниматель"
+                },
+                {
+                  text: "Впервые за много лет не испытывала страха перед стоматологом. Профессионализм на высшем уровне.",
+                  author: "Александр К.",
+                  role: "Управляющий директор"
+                },
+                {
+                  text: "Результат превзошёл все ожидания. Это не просто лечение — это искусство. Рекомендую всем своим знакомым.",
+                  author: "Мария С.",
+                  role: "Дизайнер интерьеров"
+                },
+                {
+                  text: "Клиника мирового уровня в Москве. Индивидуальный подход, внимание к деталям, безупречный сервис.",
+                  author: "Дмитрий В.",
+                  role: "Инвестор"
+                }
+              ].map((review, idx) => (
+                <CarouselItem key={idx}>
+                  <div className="p-8">
+                    <Card className="border-none shadow-xl">
+                      <CardContent className="p-12 text-center">
+                        <div className="mb-6">
+                          <Icon name="Quote" size={48} className="text-teal-gold mx-auto" />
+                        </div>
+                        <p className="font-serif text-xl text-muted-foreground leading-relaxed mb-8 italic">
+                          «{review.text}»
+                        </p>
+                        <div className="border-t pt-6">
+                          <p className="font-display text-lg font-semibold text-graphite">
+                            {review.author}
+                          </p>
+                          <p className="font-sans text-sm text-muted-foreground">
+                            {review.role}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-12" />
+            <CarouselNext className="-right-12" />
+          </Carousel>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-display text-5xl font-bold text-graphite mb-12 text-center">
             Наши врачи
