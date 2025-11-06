@@ -129,6 +129,61 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="relative py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-graphite via-graphite/95 to-teal-gold/20"></div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{backgroundImage: 'url(https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/d8164048-240e-4ae9-8a68-1b2b5d32eaff.jpg)'}}
+        ></div>
+        
+        <div className="relative z-10 max-w-6xl mx-auto text-center text-white">
+          <div className="inline-block bg-teal-gold/20 backdrop-blur-sm px-6 py-2 rounded-full mb-8 border border-teal-gold/30">
+            <span className="font-serif text-champagne text-sm tracking-wider">СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ</span>
+          </div>
+          
+          <h2 className="font-display text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Элитная стоматология<br />в центре Москвы
+          </h2>
+          
+          <p className="font-serif text-xl md:text-2xl text-champagne/90 mb-12 max-w-4xl mx-auto leading-relaxed">
+            Мы объединяем передовые технологии, безупречную эстетику и внимательный сервис,<br />
+            чтобы каждая улыбка стала отражением вашего статуса и уверенности.
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all">
+              <div className="text-teal-gold text-4xl mb-3">🎁</div>
+              <h3 className="font-display text-xl font-bold mb-2">Первая консультация</h3>
+              <p className="font-serif text-champagne/80 mb-3">Бесплатный осмотр и план лечения</p>
+              <p className="text-teal-gold font-bold text-2xl">0 ₽</p>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all">
+              <div className="text-teal-gold text-4xl mb-3">✨</div>
+              <h3 className="font-display text-xl font-bold mb-2">Комплексная чистка</h3>
+              <p className="font-serif text-champagne/80 mb-3">Профгигиена + Air Flow</p>
+              <p className="text-teal-gold font-bold text-2xl">5 900 ₽</p>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all">
+              <div className="text-teal-gold text-4xl mb-3">⭐</div>
+              <h3 className="font-display text-xl font-bold mb-2">Голливудская улыбка</h3>
+              <p className="font-serif text-champagne/80 mb-3">Виниры премиум-класса</p>
+              <p className="text-teal-gold font-bold text-2xl">от 35 000 ₽</p>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-teal-gold hover:bg-teal-gold/90 text-graphite font-bold px-8 py-6 text-lg">
+              Записаться на консультацию
+            </Button>
+            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+              Узнать больше
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 px-6 bg-gradient-to-b from-white to-champagne/20">
         <div ref={aboutSection.elementRef} className={`max-w-5xl mx-auto transition-all duration-700 ${aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -170,12 +225,32 @@ const Index = () => {
           </p>
         </div>
         
-        <div className="max-w-6xl mx-auto">
-          <img 
-            src="https://cdn.poehali.dev/files/06e564fd-4ced-4499-8380-20a12b79266d.png"
-            alt="Наша клиника"
-            className="rounded-3xl shadow-2xl w-full animate-fade-in"
-          />
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-12">
+            <h3 className="font-display text-3xl font-bold text-graphite mb-8 text-center">Посмотрите нашу клинику</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <img 
+                src="https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/d8164048-240e-4ae9-8a68-1b2b5d32eaff.jpg"
+                alt="Ресепшн клиники"
+                className="rounded-2xl shadow-xl w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <img 
+                src="https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/070574d4-c01b-4247-8d5d-9a60eb0c5702.jpg"
+                alt="Кабинет лечения"
+                className="rounded-2xl shadow-xl w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <img 
+                src="https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/8c5fe16b-bb8c-460f-98aa-c9e4dd4a5b28.jpg"
+                alt="Зона ожидания"
+                className="rounded-2xl shadow-xl w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <img 
+                src="https://cdn.poehali.dev/files/06e564fd-4ced-4499-8380-20a12b79266d.png"
+                alt="Наша клиника"
+                className="rounded-2xl shadow-xl w-full h-80 object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -189,7 +264,7 @@ const Index = () => {
             {[
               { title: "Эстетическая реставрация", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400" },
               { title: "Имплантация без боли", img: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=400" },
-              { title: "Голливудская улыбка", img: "https://images.unsplash.com/photo-1609840114035-3c981736dfa8?w=400" },
+              { title: "Голливудская улыбка", img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/213955c2-d77c-4620-b33b-213e0b4ec072.jpg" },
               { title: "Ортодонтия", img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400" }
             ].map((service, idx) => (
               <Card 
