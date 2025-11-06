@@ -15,11 +15,27 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [appointmentOpen, setAppointmentOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    service: '',
+    message: ''
+  });
   
   const aboutSection = useScrollAnimation();
   const servicesSection = useScrollAnimation();
@@ -36,6 +52,13 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Заявка отправлена:', formData);
+    setAppointmentOpen(false);
+    setFormData({ name: '', phone: '', service: '', message: '' });
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -108,10 +131,19 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Button size="lg" className="bg-graphite hover:bg-graphite/90 text-white px-8 py-6 text-lg">
+            <Button 
+              size="lg" 
+              className="bg-graphite hover:bg-graphite/90 text-white px-8 py-6 text-lg"
+              onClick={() => setAppointmentOpen(true)}
+            >
               Записаться на консультацию
             </Button>
-            <Button size="lg" variant="outline" className="border-2 px-8 py-6 text-lg">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-2 px-8 py-6 text-lg"
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               Посмотреть клинику
             </Button>
           </div>
@@ -174,10 +206,19 @@ const Index = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-teal-gold hover:bg-teal-gold/90 text-graphite font-bold px-8 py-6 text-lg">
+            <Button 
+              size="lg" 
+              className="bg-teal-gold hover:bg-teal-gold/90 text-graphite font-bold px-8 py-6 text-lg"
+              onClick={() => setAppointmentOpen(true)}
+            >
               Записаться на консультацию
             </Button>
-            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            >
               Узнать больше
             </Button>
           </div>
@@ -564,6 +605,71 @@ const Index = () => {
           <Icon name="ArrowUp" size={24} />
         </button>
       )}
+
+      <Dialog open={appointmentOpen} onOpenChange={setAppointmentOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="font-display text-3xl text-graphite">Запись на консультацию</DialogTitle>
+            <DialogDescription className="font-serif text-base">
+              Заполните форму, и наш администратор свяжется с вами в течение 10 минут
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="font-serif">Ваше имя *</Label>
+              <Input
+                id="name"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Иван Иванов"
+                className="h-12 border-2 focus:border-teal-gold"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="font-serif">Телефон *</Label>
+              <Input
+                id="phone"
+                type="tel"
+                required
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+7 (___) ___-__-__"
+                className="h-12 border-2 focus:border-teal-gold"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="service" className="font-serif">Услуга (необязательно)</Label>
+              <Input
+                id="service"
+                value={formData.service}
+                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                placeholder="Например: имплантация, виниры"
+                className="h-12 border-2 focus:border-teal-gold"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="message" className="font-serif">Комментарий (необязательно)</Label>
+              <Textarea
+                id="message"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Расскажите о ваших пожеланиях"
+                className="min-h-[100px] border-2 focus:border-teal-gold resize-none"
+              />
+            </div>
+            <Button 
+              type="submit" 
+              className="w-full h-12 bg-graphite hover:bg-graphite/90 text-white font-bold text-lg"
+            >
+              Записаться
+            </Button>
+            <p className="text-center text-xs text-muted-foreground font-serif">
+              Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+            </p>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <footer className="bg-graphite text-white py-12 px-6">
         <div className="max-w-6xl mx-auto">
