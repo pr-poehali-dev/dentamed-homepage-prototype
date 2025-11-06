@@ -294,6 +294,47 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-32 px-6 bg-gradient-to-b from-white via-champagne/10 to-white">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="font-display text-5xl md:text-6xl font-bold text-graphite mb-8 leading-tight">
+            Стоматология, где забота<br />становится искусством
+          </h2>
+          
+          <div className="font-serif text-xl text-muted-foreground leading-relaxed space-y-6 max-w-4xl mx-auto mb-12">
+            <p>
+              В DensaMed каждый визит — это персональный опыт комфорта и уверенности.
+            </p>
+            <p>
+              Мы создали пространство, где технологии, эстетика и внимание к деталям работают ради главного — вашего идеального результата.
+            </p>
+            <p>
+              Наши пациенты ценят не только качество лечения, но и атмосферу доверия, в которой они чувствуют себя спокойно.
+            </p>
+            <p className="text-2xl font-semibold text-graphite pt-4">
+              — стоматология, достойная вашего уровня
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="bg-graphite hover:bg-graphite/90 text-white px-8 py-6 text-lg"
+              onClick={() => setAppointmentOpen(true)}
+            >
+              Записаться на консультацию
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-2 px-8 py-6 text-lg"
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Узнать больше
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 px-6 bg-gradient-to-b from-white to-champagne/20">
         <div ref={aboutSection.elementRef} className={`max-w-5xl mx-auto transition-all duration-700 ${aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex flex-col md:flex-row gap-12 items-center">
