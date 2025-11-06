@@ -9,11 +9,87 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useState, useEffect } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  const aboutSection = useScrollAnimation();
+  const servicesSection = useScrollAnimation();
+  const advantagesSection = useScrollAnimation();
+  const worksSection = useScrollAnimation();
+  const reviewsSection = useScrollAnimation();
+  const doctorsSection = useScrollAnimation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-champagne/30 to-white overflow-hidden">
+    <div className="min-h-screen bg-white relative">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <h3 className="font-display text-2xl font-bold text-graphite">Dentamed</h3>
+          
+          <div className="hidden md:flex gap-8 font-serif text-sm">
+            <button onClick={() => scrollToSection('services')} className="hover:text-teal-gold transition-colors">Услуги</button>
+            <button onClick={() => scrollToSection('doctors')} className="hover:text-teal-gold transition-colors">Врачи</button>
+            <button onClick={() => scrollToSection('about')} className="hover:text-teal-gold transition-colors">О клинике</button>
+            <button onClick={() => scrollToSection('contact')} className="hover:text-teal-gold transition-colors">Контакты</button>
+          </div>
+          
+          <div className="hidden md:flex gap-3">
+            <Button size="sm" variant="outline">+7 (495) 123-45-67</Button>
+            <Button size="sm" className="bg-graphite hover:bg-graphite/90">Записаться</Button>
+          </div>
+
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Icon name="Menu" size={24} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px]">
+              <div className="flex flex-col gap-6 mt-8">
+                <h3 className="font-display text-2xl font-bold text-graphite mb-4">Меню</h3>
+                <button onClick={() => scrollToSection('services')} className="font-serif text-lg text-left hover:text-teal-gold transition-colors">Услуги</button>
+                <button onClick={() => scrollToSection('doctors')} className="font-serif text-lg text-left hover:text-teal-gold transition-colors">Врачи</button>
+                <button onClick={() => scrollToSection('about')} className="font-serif text-lg text-left hover:text-teal-gold transition-colors">О клинике</button>
+                <button onClick={() => scrollToSection('contact')} className="font-serif text-lg text-left hover:text-teal-gold transition-colors">Контакты</button>
+                <div className="pt-6 border-t">
+                  <Button className="w-full mb-3 bg-graphite hover:bg-graphite/90">Записаться</Button>
+                  <Button variant="outline" className="w-full">+7 (495) 123-45-67</Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </nav>
+      <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-champagne/30 to-white overflow-hidden pt-20">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600')] bg-cover bg-center opacity-10"></div>
         
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center animate-fade-in">
@@ -54,7 +130,7 @@ const Index = () => {
       </section>
 
       <section className="py-20 px-6 bg-gradient-to-b from-white to-champagne/20">
-        <div className="max-w-5xl mx-auto">
+        <div ref={aboutSection.elementRef} className={`max-w-5xl mx-auto transition-all duration-700 ${aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/3 animate-scale-in">
               <img 
@@ -85,7 +161,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-white">
+      <section id="about" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto text-center mb-16">
           <h2 className="font-display text-5xl font-bold text-graphite mb-6">О клинике</h2>
           <p className="font-serif text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -103,7 +179,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-gradient-to-b from-champagne/20 to-white">
+      <section id="services" className="py-20 px-6 bg-gradient-to-b from-champagne/20 to-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-display text-5xl font-bold text-graphite mb-12 text-center">
             Основные направления
@@ -143,7 +219,7 @@ const Index = () => {
       </section>
 
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+        <div ref={advantagesSection.elementRef} className={`max-w-7xl mx-auto transition-all duration-700 ${advantagesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-display text-5xl font-bold text-graphite mb-12 text-center">
             Преимущества элитной клиники
           </h2>
@@ -172,7 +248,7 @@ const Index = () => {
       </section>
 
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+        <div ref={worksSection.elementRef} className={`max-w-7xl mx-auto transition-all duration-700 ${worksSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-display text-5xl font-bold text-graphite mb-4 text-center">
             Фото наших работ
           </h2>
@@ -209,7 +285,7 @@ const Index = () => {
       </section>
 
       <section className="py-20 px-6 bg-gradient-to-b from-champagne/20 to-white">
-        <div className="max-w-6xl mx-auto">
+        <div ref={reviewsSection.elementRef} className={`max-w-6xl mx-auto transition-all duration-700 ${reviewsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-display text-5xl font-bold text-graphite mb-4 text-center">
             Отзывы пациентов
           </h2>
@@ -271,8 +347,8 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section id="doctors" className="py-20 px-6 bg-white">
+        <div ref={doctorsSection.elementRef} className={`max-w-6xl mx-auto transition-all duration-700 ${doctorsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="font-display text-5xl font-bold text-graphite mb-12 text-center">
             Наши врачи
           </h2>
@@ -363,7 +439,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="relative py-20 px-6 bg-gradient-to-b from-graphite to-graphite/90 text-white">
+      <section id="contact" className="relative py-20 px-6 bg-gradient-to-b from-graphite to-graphite/90 text-white">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600')] bg-cover bg-center opacity-10"></div>
         
         <div className="relative z-10 max-w-6xl mx-auto">
@@ -403,6 +479,16 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 bg-graphite hover:bg-graphite/90 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+          aria-label="Наверх"
+        >
+          <Icon name="ArrowUp" size={24} />
+        </button>
+      )}
 
       <footer className="bg-graphite text-white py-12 px-6">
         <div className="max-w-6xl mx-auto">
