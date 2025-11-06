@@ -225,6 +225,75 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-block bg-champagne/30 px-6 py-2 rounded-full mb-6">
+              <span className="font-serif text-graphite text-sm tracking-wider font-semibold">РЕЗУЛЬТАТЫ НАШИХ РАБОТ</span>
+            </div>
+            <h2 className="font-display text-5xl font-bold text-graphite mb-6">
+              Преображения, которые меняют жизнь
+            </h2>
+            <p className="font-serif text-xl text-muted-foreground max-w-3xl mx-auto">
+              Наши пациенты доверяют нам самое ценное — свою улыбку.<br />
+              Посмотрите на реальные результаты наших работ.
+            </p>
+          </div>
+
+          <Carousel className="w-full max-w-5xl mx-auto">
+            <CarouselContent>
+              {[
+                {
+                  img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/40e21343-0be0-4ba2-b699-066c56808d13.jpg",
+                  title: "Отбеливание зубов",
+                  desc: "Профессиональное отбеливание системой ZOOM 4"
+                },
+                {
+                  img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/93f4fb8c-d43c-4857-a5ce-08c4c6f53ec1.jpg",
+                  title: "Керамические виниры",
+                  desc: "Голливудская улыбка за 2 визита"
+                },
+                {
+                  img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/2cd978b5-0bcc-49ed-84e0-cfb8289aab9b.jpg",
+                  title: "Имплантация",
+                  desc: "Восстановление утраченных зубов"
+                },
+                {
+                  img: "https://cdn.poehali.dev/projects/871b0a6f-2cf3-4c50-9ce2-4565ad9410ae/files/213955c2-d77c-4620-b33b-213e0b4ec072.jpg",
+                  title: "Комплексная реставрация",
+                  desc: "Полное восстановление эстетики улыбки"
+                }
+              ].map((item, idx) => (
+                <CarouselItem key={idx} className="md:basis-1/2">
+                  <div className="p-4">
+                    <Card className="border-none overflow-hidden shadow-xl">
+                      <div className="relative">
+                        <img 
+                          src={item.img}
+                          alt={item.title}
+                          className="w-full h-96 object-cover"
+                        />
+                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                          <span className="font-serif text-sm font-semibold text-graphite">До → После</span>
+                        </div>
+                      </div>
+                      <CardContent className="p-6">
+                        <h3 className="font-display text-2xl font-bold text-graphite mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="font-serif text-muted-foreground">{item.desc}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-12" />
+            <CarouselNext className="-right-12" />
+          </Carousel>
+        </div>
+      </section>
+
       <section className="py-20 px-6 bg-gradient-to-b from-white to-champagne/20">
         <div ref={aboutSection.elementRef} className={`max-w-5xl mx-auto transition-all duration-700 ${aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex flex-col md:flex-row gap-12 items-center">
